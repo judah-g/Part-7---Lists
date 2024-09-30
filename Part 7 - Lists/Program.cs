@@ -17,6 +17,7 @@ namespace Part_7___Lists
             string answer, intAnswer = null, stringAnswer;
             Random random = new Random();
 
+            int numberHelper;
             List<int> ints = new List<int>();
 
             while (!done)
@@ -66,6 +67,18 @@ namespace Part_7___Lists
                             for (int i = 0; i < 25; i++)
                                 ints.Add(random.Next(10, 21));
                         }
+
+                        else if (intAnswer == "3")
+                        {
+                            Console.WriteLine("What number would you like to remove");
+                            while (!int.TryParse(Console.ReadLine(), out numberHelper) && !ints.Contains(numberHelper))
+                                Console.WriteLine("Your list does not have that");
+
+                            for (int i = 0;i < ints.Count(); i++)
+                                if (ints[i] == numberHelper)
+                                    { ints.RemoveAt(i); }
+                        }
+
                     }
                     ints.Clear();
                     intAnswer = null;
