@@ -17,7 +17,7 @@ namespace Part_7___Lists
             string answer, intAnswer = null, stringAnswer;
             Random random = new Random();
 
-            int numberHelper;
+            int numberHelper, counter;
             List<int> ints = new List<int>();
 
             while (!done)
@@ -41,9 +41,9 @@ namespace Part_7___Lists
                     {
                         if (intAnswer != null)
                         {
-                            for (int i = 0; i < 25; i++)
+                            for (int i = 0; i < ints.Count; i++)
                             {
-                                if (i < 24)
+                                if (i < (ints.Count - 1))
                                     Console.Write($"{ints[i]}, ");
                                 else
                                     Console.Write($"{ints[i]}\n");
@@ -70,13 +70,59 @@ namespace Part_7___Lists
 
                         else if (intAnswer == "3")
                         {
-                            Console.WriteLine("What number would you like to remove");
+                            Console.WriteLine("What number would you like to remove?");
                             while (!int.TryParse(Console.ReadLine(), out numberHelper) && !ints.Contains(numberHelper))
                                 Console.WriteLine("Your list does not have that");
+                            Console.Clear();
 
-                            for (int i = 0;i < ints.Count(); i++)
+
+                            for (int i = 0; i < ints.Count(); i++)
                                 if (ints[i] == numberHelper)
-                                    { ints.RemoveAt(i); }
+                                { ints.RemoveAt(i); i--; }
+                        }
+
+                        else if (intAnswer == "4")
+                        {
+                            Console.WriteLine("What number would you like to add?");
+                            while (!int.TryParse(Console.ReadLine(), out numberHelper))
+                                Console.WriteLine("You can't add that");
+                            Console.Clear();
+
+                            ints.Add((int)numberHelper);
+                        }
+
+                        else if (intAnswer == "5")
+                        {
+                            Console.WriteLine("What number would you like to count?");
+                            while (!int.TryParse(Console.ReadLine(), out numberHelper) && !ints.Contains(numberHelper))
+                                Console.WriteLine("Your list does not have that");
+                            Console.Clear();
+
+                            counter = 0;
+                            for (int i = 0; i < ints.Count(); i++)
+                                if (ints[i] == numberHelper)
+                                { counter++; }
+
+                            Console.WriteLine($"There are {counter} {numberHelper}'s in your list.\n");
+                        }
+
+                        else if (intAnswer == "6")
+                        {
+                            Console.WriteLine($"Your highest number is {ints.Max()}.\n");
+                        }
+
+                        else if (intAnswer == "7")
+                        {
+                            Console.WriteLine($"Your lowest number is {ints.Min()}.\n");
+                        }
+
+                        else if (intAnswer == "8")
+                        {
+                            numberHelper = 0;
+                            for (int i = 0; i < ints.Count; i++)
+                                numberHelper += ints[i];
+
+                            Console.WriteLine($"The sum is {numberHelper} and the average is {ints.Average()}.\n");
                         }
 
                     }
