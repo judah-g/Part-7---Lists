@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,18 @@ namespace Part_7___Lists
 {
     internal class Program
     {
+        public static int MaxIndex(List<int> list)
+        {
+            //didn't know how to do this and this is what google gave me
+            int indexMax
+            = !list.Any() ? -1 :
+            list
+            .Select((value, index) => new { Value = value, Index = index })
+            .Aggregate((a, b) => (a.Value > b.Value) ? a : b)
+            .Index;
+            return indexMax;
+        }
+
         static void Main(string[] args)
         {
             //jman
@@ -18,11 +31,13 @@ namespace Part_7___Lists
             Random random = new Random();
 
             int numberHelper, counter;
-            List<int> ints = new List<int>();
+            List<int> ints = new List<int>(), dupeCount = new List<int>(), dupeCountHelper = new List<int>();
+
+            List<string> vegetables = new List<string>();
 
             while (!done)
             {
-                Console.WriteLine("(I)ntegers or (S)trings?");
+                Console.WriteLine("(I)ntegers, (S)trings or (Q)uit?");
                 answer = Console.ReadLine().ToLower();
                 Console.Clear();
 
@@ -31,23 +46,16 @@ namespace Part_7___Lists
                     for (int i = 0; i < 25; i++)
                     {
                         ints.Add(random.Next(10, 21));
-                        if (i < 24)
-                            Console.Write($"{ints[i]}, ");
-                        else
-                            Console.Write($"{ints[i]}\n");
                     }
 
                     while (!intDone)
                     {
-                        if (intAnswer != null)
+                        for (int i = 0; i < ints.Count; i++)
                         {
-                            for (int i = 0; i < ints.Count; i++)
-                            {
-                                if (i < (ints.Count - 1))
-                                    Console.Write($"{ints[i]}, ");
-                                else
-                                    Console.Write($"{ints[i]}\n");
-                            }
+                            if (i < (ints.Count - 1))
+                                Console.Write($"{ints[i]}, ");
+                            else
+                                Console.Write($"{ints[i]}\n");
                         }
                         Console.WriteLine();
                         Console.WriteLine("What would you like to do?");
@@ -125,6 +133,31 @@ namespace Part_7___Lists
                             Console.WriteLine($"The sum is {numberHelper} and the average is {ints.Average()}.\n");
                         }
 
+                        else if (intAnswer == "9")
+                        {
+
+                            for (int j = ints.Min(); j < ints.Max(); j++)
+                            {
+                                if (ints.Contains(j))
+                                {
+                                    counter = 0;
+                                    for (int i = 0; i < ints.Count(); i++)
+                                        if (ints[i] == j)
+                                            counter++;
+                                    dupeCount.Add(counter);
+                                    dupeCountHelper.Add(j);
+                                }
+
+                            }
+
+                            Console.WriteLine($"Your most frequently occuring numbers are your " +
+                                $"{dupeCount[MaxIndex(dupeCount)]} {dupeCountHelper[MaxIndex(dupeCount)]}'s.\n");
+
+                        }
+
+                        else if (intAnswer == "10")
+                            intDone = true;
+
                     }
                     ints.Clear();
                     intAnswer = null;
@@ -132,8 +165,27 @@ namespace Part_7___Lists
 
                 else if (answer == "s")
                 {
-                     
+                    vegetables.Add("BROCCOLI"); vegetables.Add("BEET"); vegetables.Add("CARROT"); vegetables.Add("RADISH"); vegetables.Add("CABBAGE");
+                    while (!stringDone)
+                    {
+                        Console.WriteLine("Vegetables\n");
+                        for (int i = 0; i < vegetables.Count; i++)
+                            Console.WriteLine($"{i} - {vegetables[i]}");
+
+                        Console.WriteLine();
+                        Console.WriteLine("What would you like to do?");
+                        Console.WriteLine("1 - Remove by index\n2 - Remove by value\n3 - Search for a veggie\n" +
+                            "4 - Add a veggie\n5 - Sort list\n6 - Quit");
+
+                        stringAnswer = Console.ReadLine();
+                        Console.Clear();
+
+
+                    }
                 }
+
+                else if (answer == "q")
+                    done = true;
             }
             Console.ReadLine();
         }
