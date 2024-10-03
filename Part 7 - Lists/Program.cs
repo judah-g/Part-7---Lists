@@ -30,7 +30,7 @@ namespace Part_7___Lists
             string answer, intAnswer = null, stringAnswer;
             Random random = new Random();
 
-            int numberHelper, counter;
+            int numberHelper, counter, stringHelper;
             List<int> ints = new List<int>(), dupeCount = new List<int>(), dupeCountHelper = new List<int>();
 
             List<string> vegetables = new List<string>();
@@ -170,7 +170,7 @@ namespace Part_7___Lists
                     {
                         Console.WriteLine("Vegetables\n");
                         for (int i = 0; i < vegetables.Count; i++)
-                            Console.WriteLine($"{i} - {vegetables[i]}");
+                            Console.WriteLine($"{i + 1} - {vegetables[i]}");
 
                         Console.WriteLine();
                         Console.WriteLine("What would you like to do?");
@@ -181,6 +181,53 @@ namespace Part_7___Lists
                         Console.Clear();
 
 
+                        if (stringAnswer == "1")
+                        {
+                            Console.WriteLine("Vegetables\n");
+                            for (int i = 0; i < vegetables.Count; i++)
+                                Console.WriteLine($"{i + 1} - {vegetables[i]}");
+
+                            Console.WriteLine();
+                            Console.WriteLine("Which index would you like to remove?");
+                            while (!int.TryParse(Console.ReadLine(), out stringHelper) && vegetables[stringHelper - 1] == null)
+                                Console.WriteLine("Your list does not have that");
+
+                            Console.Clear();
+
+                            vegetables.RemoveAt(stringHelper - 1);
+                        }
+
+                        else if (stringAnswer == "2")
+                        {
+                            Console.WriteLine("Vegetables\n");
+                            for (int i = 0; i < vegetables.Count; i++)
+                                Console.WriteLine($"{i + 1} - {vegetables[i]}");
+
+                            Console.WriteLine();
+                            Console.WriteLine("Which vegetable would you like to remove?");
+                            while (!vegetables.Contains(stringAnswer))
+                            {
+                                stringAnswer = Console.ReadLine().ToUpper();
+                                if (!vegetables.Contains(stringAnswer))
+                                    Console.WriteLine("Your list does not have that");
+                            }
+                            Console.Clear();
+                            vegetables.Remove(stringAnswer);
+
+                        }
+
+                        else if (stringAnswer == "3")
+                        {
+                            Console.WriteLine("What are you searching for?");
+
+                            if (vegetables.Contains(Console.ReadLine().ToUpper()))
+                            {
+                                      
+                            }
+
+                            else
+                                Console.WriteLine("Your list doesn't have that vegetable.");
+                        }
                     }
                 }
 
