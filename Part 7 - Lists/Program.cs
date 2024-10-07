@@ -27,7 +27,7 @@ namespace Part_7___Lists
             //jman
 
             bool done = false, intDone = false, stringDone = false;
-            string answer, intAnswer = null, stringAnswer;
+            string answer, intAnswer = null, stringAnswer, stringSearcher;
             Random random = new Random();
 
             int numberHelper, counter, stringHelper;
@@ -219,15 +219,45 @@ namespace Part_7___Lists
                         else if (stringAnswer == "3")
                         {
                             Console.WriteLine("What are you searching for?");
+                            stringSearcher = Console.ReadLine().ToUpper();
+                            Console.WriteLine();
 
-                            if (vegetables.Contains(Console.ReadLine().ToUpper()))
+                            if (vegetables.Contains(stringSearcher))
                             {
-                                      
+                                Console.WriteLine($"{stringSearcher} was found at {vegetables.FindIndex(a => a.Contains(stringSearcher)) + 1}");
                             }
 
                             else
                                 Console.WriteLine("Your list doesn't have that vegetable.");
+                            Console.WriteLine();
                         }
+
+                        else if (stringAnswer == "4")
+                        {
+                            Console.WriteLine("What vegetable would you like to add?");
+                            stringSearcher = Console.ReadLine().ToUpper();
+                            Console.Clear();
+                            vegetables.Add(stringSearcher);
+                        }
+
+                        else if (stringAnswer == "5")
+                        {
+                            Console.WriteLine("How do you want to sort your list?\n1 - Aplhabetical\n2 - Word Length");
+                            while (!int.TryParse(Console.ReadLine(), out stringHelper))
+                                Console.WriteLine("That's not an option...");
+
+                            if (stringHelper == 1)
+                            { vegetables.Sort(); }
+                            else if (stringHelper == 2)
+                            {
+                                vegetables.Sort((x, y) => x.Length - y.Length);
+                            }
+
+                            Console.Clear();
+                        }
+
+                        else if (stringAnswer == "6")
+                            stringDone = true;
                     }
                 }
 
